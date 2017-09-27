@@ -16,32 +16,45 @@ $ brew install nomad
 $ brew install terraform
 ```
 
-### 3. Create environment
+### 3. Set your remote state to your own S3 bucket
+Edit file [/provider.tf](/provider.tf) and change bucket setting
+
+```hcl
+terraform {
+  backend "s3" {
+    bucket = "terraform-nic"
+    key    = "tfconfig/faas-demo"
+    region = "eu-west-1"
+  }
+}
+```
+
+### 4. Create environment
 ```
 $ terraform init
 $ terraform plan
 $ terraform apply
 ```
 
-### 4. Set Nomad and OpenFaaS environment variables
+### 5. Set Nomad and OpenFaaS environment variables
 ```
 $ export NOMAD_ADDR=http://$(terraform output nomad_alb):4646/
 $ export GATEWAY=http://$(terraform output faas_alb):8080/
 ```
 
-### 5. Run OpenFaaS on Nomad
+### 6. Run OpenFaaS on Nomad
 ```
 $ nomad run faas.hcl
 ```
 
-### 6. Deploy a function to OpenFaaS
+### 7. Deploy a function to OpenFaaS
 ```
 $ faas-cli deploy --gateway=$GATEWAY --image=functions/nodeinfo:latest --name=info --handler=node main.js
 ```
 
-### 7. Test function
+### 8. Test function
 ```
 $ faas-cli deploy --gateway=$GATEWAY --image=functions/nodeinfo:latest --name=info --handler=node main.js
 ```
-
+  
 The OpenFaaS UI is also available at http://$(terraform output faas_alb):8081
