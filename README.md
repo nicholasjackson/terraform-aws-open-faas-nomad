@@ -13,10 +13,12 @@ export AWS_REGION=eu-west-1
 ```
 $ brew install faas-cli
 $ brew install nomad
+$ brew install terraform
 ```
 
 ### 3. Create environment
 ```
+$ terraform init
 $ terraform plan
 $ terraform apply
 ```
