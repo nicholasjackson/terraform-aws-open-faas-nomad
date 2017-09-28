@@ -1,4 +1,4 @@
-# Demo of OpenFaas Running on Nomad
+# Simple OpenFaas instance Running on Nomad in AWS
 
 ## Creating a cluster
 
@@ -16,17 +16,8 @@ $ brew install nomad
 $ brew install terraform
 ```
 
-### 3. Set your remote state to your own S3 bucket
-Edit file [/provider.tf](/provider.tf) and change bucket setting
-
+### 3. Add the module to your Terraform config
 ```hcl
-terraform {
-  backend "s3" {
-    bucket = "terraform-nic"
-    key    = "tfconfig/faas-demo"
-    region = "eu-west-1"
-  }
-}
 ```
 
 ### 4. Create environment
@@ -42,7 +33,7 @@ $ export NOMAD_ADDR=http://$(terraform output nomad_alb):4646/
 $ export GATEWAY=http://$(terraform output faas_alb):8080/
 ```
 
-### 6. Run OpenFaaS on Nomad
+### 6. Run OpenFaaS on the Nomad cluster
 ```
 $ nomad run faas.hcl
 ```
@@ -58,3 +49,6 @@ $ faas-cli deploy --gateway=$GATEWAY --image=functions/nodeinfo:latest --name=in
 ```
   
 The OpenFaaS UI is also available at http://$(terraform output faas_alb):8081
+```
+$ open http://$(terraform output faas_alb):8081
+``

@@ -6,7 +6,7 @@ module "nomad" {
   min_servers = "1"
   max_servers = "1"
   min_agents  = "3"
-  max_agents  = "3"
+  max_agents  = "5"
 
   subnets        = ["${aws_subnet.default.*.id}"]
   vpc_id         = "${aws_vpc.default.id}"

@@ -6,28 +6,6 @@ resource "aws_alb" "openfaas" {
   subnets         = ["${aws_subnet.default.*.id}"]
 }
 
-resource "aws_alb_target_group" "proxy" {
-  name     = "${var.namespace}-proxy"
-  port     = 8080
-  protocol = "HTTP"
-  vpc_id   = "${aws_vpc.default.id}"
-
-  health_check {
-    path = "/system/functions"
-  }
-}
-
-resource "aws_alb_listener" "proxy" {
-  load_balancer_arn = "${aws_alb.openfaas.arn}"
-  port              = "8080"
-  protocol          = "HTTP"
-
-  default_action {
-    target_group_arn = "${aws_alb_target_group.proxy.arn}"
-    type             = "forward"
-  }
-}
-
 resource "aws_alb_target_group" "faas" {
   name     = "${var.namespace}-faas"
   port     = 8081
