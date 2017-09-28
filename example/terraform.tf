@@ -1,5 +1,5 @@
 module "open-faas-nomad" {
-  source = "nicholasjackson/terraform-aws-open-faas-nomad/aws"
+  source = "nicholasjackson/open-faas-nomad/aws"
 
   namespace = "mynamespace"
 
