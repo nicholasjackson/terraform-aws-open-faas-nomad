@@ -46,6 +46,7 @@ $ export GATEWAY=http://$(terraform output faas_alb):8080/
 ### 6. Run OpenFaaS on the Nomad cluster
 
 ```bash
+$ curl https://raw.githubusercontent.com/hashicorp/faas-nomad/master/faas.hcl -o faas.hcl
 $ nomad run faas.hcl
 ```
 
@@ -67,5 +68,5 @@ The OpenFaaS UI is also available at http://$(terraform output faas_alb):8081
 $ open http://$(terraform output faas_alb):8081
 ```
    
-Please see [example/terraform.tf](example/terraform.tf) for usage with all configurable options and 
+Please see [example/terraform.tf](https://github.com/nicholasjackson/terraform-aws-open-faas-nomad/blob/master/example/terraform.tf) for usage with all configurable options and 
 [openfaas.com](http://openfaas.com) for more details on OpenFaaS.
