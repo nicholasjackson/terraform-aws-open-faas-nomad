@@ -2,7 +2,7 @@
 resource "aws_alb" "openfaas" {
   name            = "${var.namespace}-openfaas"
   internal        = false
-  security_groups = ["${aws_security_group.allow_all.id}"]
+  security_groups = ["${aws_security_group.allow_nomad.id}"]
   subnets         = ["${aws_subnet.default.*.id}"]
 }
 
@@ -31,7 +31,7 @@ resource "aws_alb_listener" "faas" {
 resource "aws_alb" "nomad" {
   name            = "${var.namespace}-nomad"
   internal        = false
-  security_groups = ["${aws_security_group.allow_all.id}"]
+  security_groups = ["${aws_security_group.allow_nomad.id}"]
   subnets         = ["${aws_subnet.default.*.id}"]
 }
 

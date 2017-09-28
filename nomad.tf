@@ -8,10 +8,12 @@ module "nomad" {
   min_agents  = "${var.min_agents}"
   max_agents  = "${var.max_agents}"
 
+  key_name = "${var.ssh_key}"
+
   subnets        = ["${aws_subnet.default.*.id}"]
   vpc_id         = "${aws_vpc.default.id}"
   key_name       = "${aws_key_pair.nomad.id}"
-  security_group = "${aws_security_group.allow_all.id}"
+  security_group = "${aws_security_group.allow_nomad.id}"
 
   client_target_groups = ["${aws_alb_target_group.faas.arn}"]
   server_target_groups = ["${aws_alb_target_group.nomad.arn}"]
