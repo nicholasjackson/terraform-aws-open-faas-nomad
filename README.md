@@ -65,7 +65,7 @@ The OpenFaaS UI is also available at http://$(terraform output faas_alb):8081
 
 ```bash
 $ open http://$(terraform output faas_alb):8081
-``
+```
    
 Please see [example/terraform.tf](example/terraform.tf) for usage with all configurable options and 
 [openfaas.com](http://openfaas.com) for more details on OpenFaaS.
