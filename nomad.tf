@@ -3,10 +3,10 @@ module "nomad" {
 
   namespace = "${var.namespace}"
 
-  min_servers = "1"
-  max_servers = "1"
-  min_agents  = "3"
-  max_agents  = "5"
+  min_servers = "${var.min_servers}"
+  max_servers = "${var.max_servers}"
+  min_agents  = "${var.min_agents}"
+  max_agents  = "${var.max_agents}"
 
   subnets        = ["${aws_subnet.default.*.id}"]
   vpc_id         = "${aws_vpc.default.id}"
@@ -17,12 +17,12 @@ module "nomad" {
   server_target_groups = ["${aws_alb_target_group.nomad.arn}"]
 
   consul_enabled        = true
-  consul_version        = "0.9.3"
+  consul_version        = "${var.consul_version}"
   consul_join_tag_key   = "AutoJoin"
   consul_join_tag_value = "${var.namespace}"
 
   nomad_enabled = true
-  nomad_version = "0.6.3"
+  nomad_version = "${var.nomad_version}"
 
   hashiui_enabled = false
   hashiui_version = "v0.20.1"
