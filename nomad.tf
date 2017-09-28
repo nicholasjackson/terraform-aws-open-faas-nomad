@@ -13,7 +13,7 @@ module "nomad" {
   key_name       = "${aws_key_pair.nomad.id}"
   security_group = "${aws_security_group.allow_all.id}"
 
-  client_target_groups = ["${aws_alb_target_group.proxy.arn}", "${aws_alb_target_group.faas.arn}"]
+  client_target_groups = ["${aws_alb_target_group.faas.arn}"]
   server_target_groups = ["${aws_alb_target_group.nomad.arn}"]
 
   consul_enabled        = true
