@@ -39,7 +39,7 @@ job "faas-nomadd" {
           mbits = 10
 
           port "http" {
-            static = 8080
+            static = 8081
           }
         }
       }
@@ -49,7 +49,7 @@ job "faas-nomadd" {
       driver = "docker"
 
       env {
-        functions_provider_url = "http://${NOMAD_IP_http}:8080/"
+        functions_provider_url = "http://${NOMAD_IP_http}:8081/"
       }
 
       config {
@@ -68,7 +68,7 @@ job "faas-nomadd" {
           mbits = 10
 
           port "http" {
-            static = 8081
+            static = 8080
           }
         }
       }

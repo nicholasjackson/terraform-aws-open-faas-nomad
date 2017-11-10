@@ -8,7 +8,7 @@ resource "aws_alb" "openfaas" {
 
 resource "aws_alb_target_group" "faas" {
   name     = "${var.namespace}-faas"
-  port     = 8081
+  port     = 8080
   protocol = "HTTP"
   vpc_id   = "${aws_vpc.default.id}"
 
@@ -19,7 +19,7 @@ resource "aws_alb_target_group" "faas" {
 
 resource "aws_alb_listener" "faas" {
   load_balancer_arn = "${aws_alb.openfaas.arn}"
-  port              = "8081"
+  port              = "8080"
   protocol          = "HTTP"
 
   default_action {
