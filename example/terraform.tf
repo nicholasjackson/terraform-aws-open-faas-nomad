@@ -1,7 +1,7 @@
 module "open-faas-nomad" {
   source = "nicholasjackson/open-faas-nomad/aws"
 
-  namespace = "mynamespace"
+  namespace = "openfaas"
 
   ssh_key = "~/.ssh/id_rsa.pub"
 
