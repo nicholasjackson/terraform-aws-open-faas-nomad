@@ -10,8 +10,8 @@ module "open-faas-nomad" {
   min_agents  = "3"
   max_agents  = "5"
 
-  consul_version = "0.9.3"
-  nomad_version  = "0.6.3"
+  consul_version = "1.0.0"
+  nomad_version  = "0.7.0"
 }
 
 output "nomad_alb" {

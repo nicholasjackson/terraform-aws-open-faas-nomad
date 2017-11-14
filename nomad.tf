@@ -27,5 +27,5 @@ module "nomad" {
   nomad_version = "${var.nomad_version}"
 
   hashiui_enabled = false
-  hashiui_version = "v0.20.1"
+  hashiui_version = ""
 }
