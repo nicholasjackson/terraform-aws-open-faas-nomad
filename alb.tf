@@ -56,3 +56,61 @@ resource "aws_alb_listener" "nomad" {
     type             = "forward"
   }
 }
+
+resource "aws_alb" "prometheus" {
+  name            = "${var.namespace}-prometheus"
+  internal        = false
+  security_groups = ["${aws_security_group.allow_nomad.id}"]
+  subnets         = ["${aws_subnet.default.*.id}"]
+}
+
+resource "aws_alb_target_group" "prometheus" {
+  name     = "${var.namespace}-nomad"
+  port     = 9090
+  protocol = "HTTP"
+  vpc_id   = "${aws_vpc.default.id}"
+
+  health_check {
+    path = "/graph"
+  }
+}
+
+resource "aws_alb_listener" "prometheus" {
+  load_balancer_arn = "${aws_alb.prometheus.arn}"
+  port              = "9090"
+  protocol          = "HTTP"
+
+  default_action {
+    target_group_arn = "${aws_alb_target_group.prometheus.arn}"
+    type             = "forward"
+  }
+}
+
+resource "aws_alb" "grafana" {
+  name            = "${var.namespace}-grafana"
+  internal        = false
+  security_groups = ["${aws_security_group.allow_nomad.id}"]
+  subnets         = ["${aws_subnet.default.*.id}"]
+}
+
+resource "aws_alb_target_group" "grafana" {
+  name     = "${var.namespace}-grafana"
+  port     = 3000
+  protocol = "HTTP"
+  vpc_id   = "${aws_vpc.default.id}"
+
+  health_check {
+    path = "/login"
+  }
+}
+
+resource "aws_alb_listener" "grafana" {
+  load_balancer_arn = "${aws_alb.grafana.arn}"
+  port              = "3000"
+  protocol          = "HTTP"
+
+  default_action {
+    target_group_arn = "${aws_alb_target_group.grafana.arn}"
+    type             = "forward"
+  }
+}
