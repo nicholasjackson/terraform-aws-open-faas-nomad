@@ -6,6 +6,14 @@ output "faas_alb" {
   value = "${aws_alb.openfaas.dns_name}"
 }
 
+output "grafana_alb" {
+  value = "${aws_alb.grafana.dns_name}"
+}
+
+output "prometheus_alb" {
+  value = "${aws_alb.prometheus.dns_name}"
+}
+
 output "vpc_id" {
   value = "${aws_vpc.default.id}"
 }
