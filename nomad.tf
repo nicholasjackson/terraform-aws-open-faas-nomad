@@ -10,6 +10,8 @@ module "nomad" {
 
   key_name = "${var.ssh_key}"
 
+  instance_type = "${var.instance_type}"
+
   subnets        = ["${aws_subnet.default.*.id}"]
   vpc_id         = "${aws_vpc.default.id}"
   key_name       = "${aws_key_pair.nomad.id}"
