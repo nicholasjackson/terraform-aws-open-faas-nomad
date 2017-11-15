@@ -65,7 +65,7 @@ resource "aws_alb" "prometheus" {
 }
 
 resource "aws_alb_target_group" "prometheus" {
-  name     = "${var.namespace}-nomad"
+  name     = "${var.namespace}-prometheus"
   port     = 9090
   protocol = "HTTP"
   vpc_id   = "${aws_vpc.default.id}"
