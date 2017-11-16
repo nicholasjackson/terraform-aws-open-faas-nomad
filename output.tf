@@ -2,16 +2,8 @@ output "nomad_alb" {
   value = "${aws_alb.nomad.dns_name}"
 }
 
-output "faas_alb" {
+output "openfaas_alb" {
   value = "${aws_alb.openfaas.dns_name}"
-}
-
-output "grafana_alb" {
-  value = "${aws_alb.grafana.dns_name}"
-}
-
-output "prometheus_alb" {
-  value = "${aws_alb.prometheus.dns_name}"
 }
 
 output "vpc_id" {

@@ -18,7 +18,7 @@ module "nomad" {
   security_group = "${aws_security_group.allow_nomad.id}"
 
   client_target_groups = [
-    "${aws_alb_target_group.faas.arn}",
+    "${aws_alb_target_group.openfaas.arn}",
     "${aws_alb_target_group.prometheus.arn}",
     "${aws_alb_target_group.grafana.arn}",
   ]

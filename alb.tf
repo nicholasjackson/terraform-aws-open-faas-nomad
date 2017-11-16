@@ -1,33 +1,4 @@
 # Create a new load balancer
-resource "aws_alb" "openfaas" {
-  name            = "${var.namespace}-openfaas"
-  internal        = false
-  security_groups = ["${aws_security_group.allow_nomad.id}"]
-  subnets         = ["${aws_subnet.default.*.id}"]
-}
-
-resource "aws_alb_target_group" "faas" {
-  name     = "${var.namespace}-faas"
-  port     = 8080
-  protocol = "HTTP"
-  vpc_id   = "${aws_vpc.default.id}"
-
-  health_check {
-    path = "/ui/"
-  }
-}
-
-resource "aws_alb_listener" "faas" {
-  load_balancer_arn = "${aws_alb.openfaas.arn}"
-  port              = "8080"
-  protocol          = "HTTP"
-
-  default_action {
-    target_group_arn = "${aws_alb_target_group.faas.arn}"
-    type             = "forward"
-  }
-}
-
 resource "aws_alb" "nomad" {
   name            = "${var.namespace}-nomad"
   internal        = false
@@ -57,11 +28,33 @@ resource "aws_alb_listener" "nomad" {
   }
 }
 
-resource "aws_alb" "prometheus" {
-  name            = "${var.namespace}-prometheus"
+resource "aws_alb" "openfaas" {
+  name            = "${var.namespace}-openfaas"
   internal        = false
   security_groups = ["${aws_security_group.allow_nomad.id}"]
   subnets         = ["${aws_subnet.default.*.id}"]
+}
+
+resource "aws_alb_target_group" "openfaas" {
+  name     = "${var.namespace}-openfaas"
+  port     = 8080
+  protocol = "HTTP"
+  vpc_id   = "${aws_vpc.default.id}"
+
+  health_check {
+    path = "/ui/"
+  }
+}
+
+resource "aws_alb_listener" "openfaas" {
+  load_balancer_arn = "${aws_alb.openfaas.arn}"
+  port              = "8080"
+  protocol          = "HTTP"
+
+  default_action {
+    target_group_arn = "${aws_alb_target_group.openfaas.arn}"
+    type             = "forward"
+  }
 }
 
 resource "aws_alb_target_group" "prometheus" {
@@ -76,7 +69,7 @@ resource "aws_alb_target_group" "prometheus" {
 }
 
 resource "aws_alb_listener" "prometheus" {
-  load_balancer_arn = "${aws_alb.prometheus.arn}"
+  load_balancer_arn = "${aws_alb.openfaas.arn}"
   port              = "9090"
   protocol          = "HTTP"
 
@@ -84,13 +77,6 @@ resource "aws_alb_listener" "prometheus" {
     target_group_arn = "${aws_alb_target_group.prometheus.arn}"
     type             = "forward"
   }
-}
-
-resource "aws_alb" "grafana" {
-  name            = "${var.namespace}-grafana"
-  internal        = false
-  security_groups = ["${aws_security_group.allow_nomad.id}"]
-  subnets         = ["${aws_subnet.default.*.id}"]
 }
 
 resource "aws_alb_target_group" "grafana" {
@@ -105,7 +91,7 @@ resource "aws_alb_target_group" "grafana" {
 }
 
 resource "aws_alb_listener" "grafana" {
-  load_balancer_arn = "${aws_alb.grafana.arn}"
+  load_balancer_arn = "${aws_alb.openfaas.arn}"
   port              = "3000"
   protocol          = "HTTP"
 
