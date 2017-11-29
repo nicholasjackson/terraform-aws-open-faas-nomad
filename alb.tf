@@ -13,7 +13,8 @@ resource "aws_alb_target_group" "nomad" {
   vpc_id   = "${aws_vpc.default.id}"
 
   health_check {
-    path = "/v1/status/leader"
+    path    = "/v1/status/leader"
+    matcher = "200,202"
   }
 }
 
@@ -42,7 +43,8 @@ resource "aws_alb_target_group" "openfaas" {
   vpc_id   = "${aws_vpc.default.id}"
 
   health_check {
-    path = "/ui/"
+    path    = "/ui/"
+    matcher = "200,202"
   }
 }
 
@@ -64,7 +66,8 @@ resource "aws_alb_target_group" "prometheus" {
   vpc_id   = "${aws_vpc.default.id}"
 
   health_check {
-    path = "/graph"
+    path    = "/graph"
+    matcher = "200,202"
   }
 }
 
@@ -86,7 +89,8 @@ resource "aws_alb_target_group" "grafana" {
   vpc_id   = "${aws_vpc.default.id}"
 
   health_check {
-    path = "/login"
+    path    = "/login"
+    matcher = "200,202"
   }
 }
 
